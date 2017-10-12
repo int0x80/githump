@@ -79,12 +79,12 @@ function get_org_emails() {
     # -----------------------------------------------------------
     git clone -n -q "${repo}"
     cd ${repo_dir}
-    git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" >> "${output_file}"
+    git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" >> "${output_file}"
 
     # -----------------------------------------------------------
     # update user with status
     # -----------------------------------------------------------
-    total=$(git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" | wc -l)
+    total=$(git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" | wc -l)
     [ $total -gt 0 ] && log_success "Dumped ${total} email addresses to ${output_file}"
 
     # -----------------------------------------------------------
@@ -114,12 +114,12 @@ function get_user_emails() {
     # -----------------------------------------------------------
     git clone -n -q "${repo}"
     cd ${repo_dir}
-    git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" >> "${output_file}"
+    git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" >> "${output_file}"
 
     # -----------------------------------------------------------
     # update user with status
     # -----------------------------------------------------------
-    total=$(git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" | wc -l)
+    total=$(git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" | wc -l)
     [ $total -gt 0 ] && log_success "Dumped ${total} email addresses to ${output_file}"
 
     # -----------------------------------------------------------
