@@ -158,7 +158,7 @@ for target in ${BASH_ARGV[*]}; do
   # accumulate all the unique emails
   # -----------------------------------------------------------
   address_count=$(find "${temp_dir}/${target}" -name "*.results" -type f -exec cat "{}" + | sort | uniq | wc -l)
-  find "${temp_dir}/${target}" -name "*.results" -type f -exec cat "{}" + | sort | uniq >> "./results/${target}.txt"
+  find "${temp_dir}/${target}" -name "*.results" -type f -exec cat "{}" + | sort | uniq > "./results/${target}.txt"
   rm -rf "${temp_dir}/${target}"
   log_success "Collected ${address_count} emails for $target, stored in ./results/${target}.txt"
 
