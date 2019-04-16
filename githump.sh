@@ -148,9 +148,18 @@ welcome
 mkdir -p results
 for target in ${BASH_ARGV[*]}; do
   # -----------------------------------------------------------
+  # sanity check the target name format
+  # -----------------------------------------------------------
+  match=$(echo "${target}" | egrep -i "^[a-z0-9]([a-z0-9]?|-([a-z0-9]+)){0,38}$")
+  if [[ -z ${match} ]]; then
+    log_error "${target} did not match the GitHub username format requirement."
+    continue
+  fi
+  
+  # -----------------------------------------------------------
   # collect the emails from the repositories
   # -----------------------------------------------------------
-  log_info "Beginning collection for $target.  This may take a while."
+  log_info "Beginning collection for $target. This may take a while."
   get_org_emails $target
   get_user_emails $target
 
