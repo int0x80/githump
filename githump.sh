@@ -77,14 +77,14 @@ function get_org_emails() {
     # -----------------------------------------------------------
     # clone the repo and extract email addresses
     # -----------------------------------------------------------
-    git clone -n -q "${repo}"
+    git clone -n -q --no-checkout --filter=blob:none "${repo}"
     cd ${repo_dir}
-    git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" >> "${output_file}"
+    git log --all | grep "^Author:" | sort | uniq | grep -E -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" >> "${output_file}"
 
     # -----------------------------------------------------------
     # update user with status
     # -----------------------------------------------------------
-    total=$(git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" | wc -l)
+    total=$(git log --all | grep "^Author:" | sort | uniq | grep -E -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" | wc -l)
     [ $total -gt 0 ] && log_success "Dumped ${total} email addresses to ${output_file}"
 
     # -----------------------------------------------------------
@@ -112,14 +112,14 @@ function get_user_emails() {
     # -----------------------------------------------------------
     # clone the repo and extract email addresses
     # -----------------------------------------------------------
-    git clone -n -q "${repo}"
+    git clone -n -q --no-checkout --filter=blob:none "${repo}"
     cd ${repo_dir}
-    git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" >> "${output_file}"
+    git log --all | grep "^Author:" | sort | uniq | grep -E -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" >> "${output_file}"
 
     # -----------------------------------------------------------
     # update user with status
     # -----------------------------------------------------------
-    total=$(git log --all | grep "^Author:" | sort | uniq | egrep -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" | wc -l)
+    total=$(git log --all | grep "^Author:" | sort | uniq | grep -E -o "\b[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b" | wc -l)
     [ $total -gt 0 ] && log_success "Dumped ${total} email addresses to ${output_file}"
 
     # -----------------------------------------------------------
@@ -150,7 +150,7 @@ for target in ${BASH_ARGV[*]}; do
   # -----------------------------------------------------------
   # sanity check the target name format
   # -----------------------------------------------------------
-  match=$(echo "${target}" | egrep -i "^[a-z0-9]([a-z0-9]?|-([a-z0-9]+)){0,38}$")
+  match=$(echo "${target}" | grep -E -i "^[a-z0-9]([a-z0-9]?|-([a-z0-9]+)){0,38}$")
   if [[ -z ${match} ]]; then
     log_error "${target} did not match the GitHub username format requirement."
     continue
